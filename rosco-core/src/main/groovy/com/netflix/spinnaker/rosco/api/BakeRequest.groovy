@@ -65,7 +65,8 @@ class BakeRequest {
 
   static enum PackageType {
     RPM('rpm', '-'),
-    DEB('deb', '_')
+    DEB('deb', '_'),
+    YUM('yum', '-')
 
     private final String packageType
     private final String versionDelimiter
@@ -86,7 +87,7 @@ class BakeRequest {
 
   static enum OperatingSystem {
 
-    centos(PackageType.RPM), ubuntu(PackageType.DEB), trusty(PackageType.DEB)
+    centos(PackageType.RPM), ubuntu(PackageType.DEB), trusty(PackageType.DEB), RHEL(PackageType.YUM)
 
     private final PackageType packageType
     private OperatingSystem(PackageType packageType) {
