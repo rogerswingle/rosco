@@ -54,6 +54,7 @@ class BakeRequest {
   Boolean enhanced_networking
   String ami_name
   String ami_suffix
+  String revision
 
   static enum CloudProviderType {
     aws, docker, gce
