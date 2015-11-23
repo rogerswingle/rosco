@@ -87,6 +87,8 @@ class PackageNameConverter {
       return PackageNameConverter.parseDebPackageName(packageName)
     } else if (packageType == BakeRequest.PackageType.RPM) {
       return PackageNameConverter.parseRpmPackageName(packageName)
+    } else if (packageType == BakeRequest.PackageType.YUM) {
+      return PackageNameConverter.parseRpmPackageName(packageName)
     } else {
       throw new IllegalArgumentException("Unrecognized packageType '$packageType'.")
     }
