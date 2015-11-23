@@ -9,32 +9,37 @@
     "aws_instance_type": null,
     "aws_source_ami": null,
     "aws_target_ami": null,
-    "appversion": "",
     "build_host": "",
     "deb_repo": null,
     "packages": "",
-    "configDir": null
+    "configDir": null,
+    "revision": ""
   },
   "builders": [{
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
-    "subnet_id": "{{user `subnet_id`}}",
-    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "subnet-a044e9c5",
+    "vpc_id": "vpc-401bf825",
     "region": "{{user `aws_region`}}",
     "ssh_username": "{{user `aws_ssh_username`}}",
     "instance_type": "{{user `aws_instance_type`}}",
     "source_ami": "{{user `aws_source_ami`}}",
     "ami_name": "{{user `aws_target_ami`}}",
-    "tags": {"appversion": "{{user `appversion`}}", "build_host": "{{user `build_host`}}"}
+    "tags": {"appversion": "{{user `revision`}}", "build_host": "{{user `build_host`}}"},
+    "ssh_pty" : "true",
+    "security_group_id" : "sg-065aa663",
+    "ssh_private_ip" : true
   }],
   "provisioners": [{
-    "type": "shell",
-    "script": "{{user `configDir`}}/install_packages.sh",
-    "environment_vars": [
-      "deb_repo={{user `deb_repo`}}",
-      "packages={{user `packages`}}"
+    "type": "ansible-local",
+    "playbook_file" : "{{user `packages`}}",
+    "extra_arguments" : [
+     "--extra-vars \"artifactory_pass=****** artifactory_user=******* app_version={{user `revision`}}\""
     ],
+    "playbook_dir" : "/data/playbook",
+    "role_paths" : ["/data/playbook/roles"],
+    "staging_directory" : "/tmp",
     "pause_before": "30s"
    }]
 }
