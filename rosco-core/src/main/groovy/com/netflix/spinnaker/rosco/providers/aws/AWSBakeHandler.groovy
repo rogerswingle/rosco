@@ -63,7 +63,9 @@ public class AWSBakeHandler extends CloudProviderBakeHandler {
     if (!awsVirtualizationSettings) {
       throw new IllegalArgumentException("No virtualization settings found for region '$region', operating system '$bakeRequest.base_os', and vm type '$vm_type'.")
     }
-
+    if (bakeRequest.base_ami){
+      awsVirtualizationSettings.sourceAmi = bakeRequest.base_ami
+    }
     return awsVirtualizationSettings
   }
 
